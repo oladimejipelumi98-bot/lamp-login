@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login | EMMYTECH</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="lamp-wrap">
+    <div class="cone"></div>
+
+    <div class="lamp" id="lamp" role="button" tabindex="0"
+         aria-label="Switch the light on or off"
+         onclick="toggleLamp()" onkeydown="if(event.key==='Enter'){toggleLamp()}">
+      <div class="wire"></div>
+      <div class="bulb"></div>
+      <svg class="shade" viewBox="0 0 160 90">
+        <path d="M62 4 L98 4 L156 84 Q80 98 4 84 Z"></path>
+        <path d="M62 4 L98 4 L106 20 L54 20 Z" class="top"></path>
+      </svg>
+      <div class="cord" id="cord">
+        <div class="cord-line"></div>
+        <div class="cord-ball"></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="hint" id="hint">Tap the lamp to switch on the light 💡</p>
+
+  <main class="card">
+    <h1 class="brand">EMMYTECH</h1>
+    <p class="sub">CREATIVE HUB CONNECTIONS</p>
+
+    <div class="tabs" id="tabs">
+      <span class="slider"></span>
+      <button type="button" id="tabLogin" class="tab active" onclick="showTab('login')">Login</button>
+      <button type="button" id="tabRegister" class="tab" onclick="showTab('register')">Register</button>
+    </div>
+
+    <div id="msg" class="msg"></div>
+
+    <form id="loginForm" onsubmit="return handleLogin(event)">
+      <div class="field">
+        <span class="icon">✉️</span>
+        <input type="email" id="loginEmail" placeholder="Email address" autocomplete="email">
+      </div>
+      <div class="field">
+        <span class="icon">🔒</span>
+        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+        <button type="button" class="eye" onclick="togglePw('loginPassword', this)">👁️</button>
+      </div>
+      <div class="row">
+        <label><input type="checkbox"> Remember me</label>
+        <a href="#" onclick="forgot(event)">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn" id="loginBtn">Login</button>
+    </form>
+
+    <form id="registerForm" class="hidden" onsubmit="return handleRegister(event)">
+      <div class="field">
+        <span class="icon">👤</span>
+        <input type="text" id="regName" placeholder="Full name" autocomplete="name">
+      </div>
+      <div class="field">
+        <span class="icon">✉️</span>
+        <input type="email" id="regEmail" placeholder="Email address" autocomplete="email">
+      </div>
+      <div class="field">
+        <span class="icon">📱</span>
+        <input type="tel" id="regPhone" placeholder="Phone number" autocomplete="tel">
+      </div>
+      <div class="field">
+        <span class="icon">🔒</span>
+        <input type="password" id="regPassword" placeholder="Password (min 6 characters)" autocomplete="new-password">
+        <button type="button" class="eye" onclick="togglePw('regPassword', this)">👁️</button>
+      </div>
+      <div class="field">
+        <span class="icon">🔒</span>
+        <input type="password" id="regConfirm" placeholder="Confirm password" autocomplete="new-password">
+        <button type="button" class="eye" onclick="togglePw('regConfirm', this)">👁️</button>
+      </div>
+      <button type="submit" class="btn" id="regBtn">Create Account</button>
+    </form>
+
+  <p class="foot">Secure login powered by Supabase.</p>
+  </main>
+
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

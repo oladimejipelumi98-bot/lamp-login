@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard | EMMYTECH</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif; min-height: 100vh;
+      display: flex; align-items: center; justify-content: center; padding: 20px;
+      background: linear-gradient(135deg, #0a2540, #0a66c2, #0a2540);
+      background-size: 200% 200%; animation: bg 10s ease infinite;
+    }
+    @keyframes bg { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+    .card {
+      width: 100%; max-width: 380px; background: #fffaf0; border-radius: 20px;
+      padding: 30px 24px; text-align: center;
+      box-shadow: 0 0 70px rgba(255, 190, 60, 0.45), 0 20px 50px rgba(0, 0, 0, 0.4);
+      animation: pop 0.7s ease both;
+    }
+    @keyframes pop { from { opacity: 0; transform: translateY(40px) scale(0.95); } to { opacity: 1; transform: none; } }
+    .wave { font-size: 54px; display: inline-block; animation: wave 1.2s ease-in-out infinite; transform-origin: 70% 70%; }
+    @keyframes wave { 0%,100% { transform: rotate(0); } 25% { transform: rotate(18deg); } 75% { transform: rotate(-12deg); } }
+    h1 { color: #0a2540; margin: 10px 0 6px; font-size: 24px; }
+    .info { color: #555; font-size: 14px; line-height: 1.8; margin-bottom: 20px; }
+    button {
+      width: 100%; padding: 14px; border: none; border-radius: 10px;
+      background: #ffb703; color: #0a2540; font-size: 16px; font-weight: bold;
+    }
+    button:active { transform: scale(0.97); }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="wave">👋</div>
+    <h1 id="welcome">Loading...</h1>
+    <p class="info" id="info"></p>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script>
+    const sb = window.supabase.createClient(
+      "https://uhnldxkigrfefrkdfcbb.supabase.co",
+      "sb_publishable_RVYOTMyzJJVVsFHuXSdExQ_u-UZS_pj"
+    );
+
+    sb.auth.getSession().then(function (res) {
+      const session = res.data.session;
+      if (!session) { window.location.href = "index.html"; return; }
+      const u = session.user;
+      const meta = u.user_metadata || {};
+      document.getElementById("welcome").textContent = "Welcome, " + (meta.full_name || "friend") + "!";
+      document.getElementById("info").textContent =
+        "Email: " + u.email + (meta.phone ? "  |  Phone: " + meta.phone : "");
+    });
+
+    async function logout() {
+      await sb.auth.signOut();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
